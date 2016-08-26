@@ -57,3 +57,7 @@ features.
 testing. The accuracy of the model is determined to verify the classifier model designed.
 This classifier model can be proposed to companies for use in order to analyze customer’s
 reactions and enhance their website performance.
+
+
+My Project report:
+ftp://anirvanmaiti.me/ProjectReportFinal.pdf
