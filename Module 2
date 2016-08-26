@@ -1,0 +1,27 @@
+#Flipkart Dataset 1
+x1 <- c(1,2,3,4,5,6,7)
+y1 <- c(54,14,25,180,130,20,0)
+spline1 <- spline(x1,y1)
+plot(spline1$x,spline1$y,type="l",lwd=2,xlab="Terminal nodes",ylab="No. of data
+points(observations)",col="blue")
+spline1_lm <- lm(spline1$y~bs(spline1$x,degree=4))
+pr.spline1 <- predict(spline1_lm)
+lines(pr.spline1~spline1$x,col="red",lwd=2)
+summary(spline1_lm)
+sp <- summary(pr.spline1)
+ps <- round(pr.spline1)
+abline(v=4,col="blue") #makes switch back at this node
+abline(h=153.30,col="red")
+abline(v=4.3,col="red")
+#Feature classification
+df <- data.frame(spline1$x,ps)
+action <- ifelse(ps==round(sp[6]),"Goes back to homepage",ifelse((ps==round(sp[1]) &
+(round(spline2$x)==6 | round(spline2$x)==7)),"Buys and Leaves","Normal"))
+df <- data.frame(spline1$x,ps,action)
+colnames(df) <- c("Nodes","No. of points at node","Action")
+df
+#Construct Naïve Bayes classifier model
+model <- naiveBayes(df$Action~.,data=df)
+predictions <- predict(model,df[,-3])
+table(predict(model,df[,-3]),df[,3])
+confusionMatrix(predictions,df[,3]) #Calculates accuracy of the classifier
